@@ -5,7 +5,7 @@
 typedef int Peso;
 typedef struct
 {
-    bool mat[MAXNUMVERTICES + 1][MAXNUMVERTICES + 1];
+    Peso mat[MAXNUMVERTICES + 1][MAXNUMVERTICES + 1];
     int numVertices;
     int numArestas;
 } Grafo;
