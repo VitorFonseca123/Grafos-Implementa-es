@@ -35,6 +35,33 @@ bool inicializaGrafo(Grafo *grafo, int nv)
     }
     return true;
 }
+bool verificavalidadeVertice(int v, Grafo *grafo){
+    if(v > grafo->numVertices){
+        fprintf(stderr, "Erro: Numero do vertice (%d) maior que o numero total de vertices\
+        (%d).\n", v, grafo->numVertices);
+        return false;
+    }
+    if(v<=0){
+        fprintf(stderr,"Erro: Numero de vertice (%d) deve ser positivo.\n", v);
+        return false;
+    }
+    return true;
+
+}
+void insereAresta(int v1, int v2, Peso peso, Grafo *grafo){
+    if(!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo))){
+        return;
+    }
+    grafo->mat[v1][v2]=peso;
+    grafo->numArestas++;
+}
+bool existeAresta(int v1, int v2, Grafo *grafo){
+    if(grafo->mat[v1][v2]==AN) return false;
+    return true;
+}
+Peso obtemPesoAresta(int v1, int v2, Grafo *Grafo){
+    return Grafo->mat[v1][v2];
+}
 int main()
 {
     Grafo g1;
