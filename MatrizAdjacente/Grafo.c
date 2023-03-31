@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "GrafoPonderado.h"
-
+#define verificar if(!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))return false;
+#define vertice_invalido;
 /*inicializar grafo
 Chamada da função exemplo:
 Grafo g;
@@ -48,20 +49,54 @@ bool verificavalidadeVertice(int v, Grafo *grafo){
     return true;
 
 }
-void insereAresta(int v1, int v2, Peso peso, Grafo *grafo){
-    if(!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo))){
-        return;
-    }
+bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo){
+    verificar;
     grafo->mat[v1][v2]=peso;
     grafo->numArestas++;
+    return true;
 }
 bool existeAresta(int v1, int v2, Grafo *grafo){
+   verificar
     if(grafo->mat[v1][v2]==AN) return false;
     return true;
 }
-Peso obtemPesoAresta(int v1, int v2, Grafo *Grafo){
-    return Grafo->mat[v1][v2];
+Peso obtemPesoAresta(int v1, int v2, Grafo *grafo){
+    verificar;
+    return grafo->mat[v1][v2];
 }
+bool removeAresta(int v1, int v2, Peso *peso, Grafo *grafo){
+    verificar;
+
+    if(grafo->mat[v1][v2]!=AN){
+        *peso=grafo->mat[v1][v2];
+        grafo->mat[v1][v2]=AN;
+        grafo->numArestas--;
+        return true;
+    }
+    return false;
+}
+bool listaAdjVazia(int v, Grafo *grafo){
+    if(!verificavalidadeVertice(v, grafo)){
+        return true;
+    }
+    int i;
+    for(i=0;i<grafo->numVertices;i++){
+        if(grafo->mat[v][i]!=AN)return false;
+    }
+    return true;
+}
+int proxListaAdj(int v, Grafo *grafo, int atual){
+    if(!verificavalidadeVertice(v, grafo))return vertice_invalido;
+    atual++;
+    while((atual <= grafo->numVertices) && grafo->mat[v][atual]==AN){
+        atual++;
+    }
+    if(atual>grafo->numVertices)return vertice_invalido;
+    return atual;
+}
+/*int primeiroListaAdj(int v, Grafo *grafo){
+    proxListaAdj(v, grafo, 0);
+}*/
 int main()
 {
     Grafo g1;
