@@ -10,3 +10,10 @@ typedef struct
     int numArestas;
 } Grafo;
 bool inicializaGrafo(Grafo *grafo, int nv);
+bool verificavalidadeVertice(int v, Grafo *grafo);
+bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo);
+bool existeAresta(int v1, int v2, Grafo *grafo);
+Peso obtemPesoAresta(int v1, int v2, Grafo *grafo);
+bool removeAresta(int v1, int v2, Peso *peso, Grafo *grafo);
+bool listaAdjVazia(int v, Grafo *grafo);
+int proxListaAdj(int v, Grafo *grafo, int atual)
