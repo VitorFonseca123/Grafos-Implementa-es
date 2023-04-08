@@ -57,8 +57,9 @@ Aresta *primeiroListaAdj(int v, Grafo *grafo)
 bool existeAresta(int v1, int v2, Grafo *grafo)
 {
     Apontador q;
-    // if(!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))return false;
-    verificar;
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
+        return false;
+
     q = grafo->listaAdj[v1];
     while ((q != NULL) && (q->vdest != v2))
     {
@@ -72,7 +73,8 @@ Peso obtemPeso(int v1, int v2, Grafo *grafo)
 {
     Apontador q;
     // if(!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))return false;
-    verificar;
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
+        return false;
     q = grafo->listaAdj[v1];
     while ((q != NULL) && (q->vdest != v2))
     {
@@ -82,17 +84,70 @@ Peso obtemPeso(int v1, int v2, Grafo *grafo)
         return q->Peso;
     return AN;
 }
-void insereAresta(int v1, int v2, Peso peso, Grafo * grafo){
+bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo)
+{
     Apontador p;
-    verificar;
-    if(!(p=(Apontador)calloc(1,sizeof(Aresta)))){
-        fprintf(stderr, "ERRO: Falha na alocacao de memoria na funcao insereAresta\n");
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
         return;
+    if (!(p = (Apontador)calloc(1, sizeof(Aresta))))
+    {
+        fprintf(stderr, "ERRO: Falha na alocacao de memoria na funcao insereAresta\n");
+        return false;
     }
-    p->vdest=v2;
-    p->Peso= peso;
+    p->vdest = v2;
+    p->Peso = peso;
     p->prox = grafo->listaAdj[v1];
-    grafo->listaAdj[v1]=p;
+    grafo->listaAdj[v1] = p;
     grafo->numArestas++;
+    return true;
 }
+bool removeArestaObtendoPeso(int v1, int v2, Peso *peso, Grafo *grafo)
+{
+    Apontador p, ant;
 
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
+        return AN;
+
+    p = grafo->listaAdj[v1];
+
+    while ((p != NULL) && p->vdest != v2)
+    {
+        ant = p;
+        p = p->prox;
+    }
+    // aresta existe
+
+    if (p != NULL)
+    {
+        if (grafo->listaAdj[v1] == p)
+            grafo->listaAdj[v1] = p->prox;
+        else
+            ant->prox = p->prox;
+        *peso = p->Peso;
+        p->prox = NULL;
+        free(p);
+        p = NULL;
+        return true;
+    }
+    return false;
+}
+void liberaGrafo(Grafo *grafo)
+{
+    int v;
+    Apontador p;
+
+    // libera a lista de adjacencia de cada vertice
+    for (v = 0; v <= grafo->numVertices; v++)
+    {
+        while ((p = grafo->listaAdj[v] != NULL))
+        {
+            grafo->listaAdj[v] = p->prox;
+            p->prox = NULL;
+            free(p);
+        }
+    }
+    grafo->numVertices = 0;
+    // libera o vetor de ponteiros as listas de adj
+    free(grafo->listaAdj);
+    grafo->listaAdj = NULL;
+}

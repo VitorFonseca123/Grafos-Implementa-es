@@ -2,9 +2,8 @@
 
 #define AN -1                 // valor que representa uma aresta invalida
 #define VERTICE_INVALIDO NULL // valor que representa uma vertice invalida
-#define verificar                                                                    \
-    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo))) \
-        return false;
+                                                                \
+    
 typedef int Peso;
 typedef struct str_aresta
 {
