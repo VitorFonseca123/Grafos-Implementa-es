@@ -151,3 +151,14 @@ void liberaGrafo(Grafo *grafo)
     free(grafo->listaAdj);
     grafo->listaAdj = NULL;
 }
+void imprimeGrafo(Grafo *grafo){
+    Apontador p;
+    for(int i=0;i<=grafo->numVertices;i++){
+         while ((p = grafo->listaAdj[i] != NULL))
+        {
+            printf("%d ", grafo->listaAdj[i]->Peso);
+            grafo->listaAdj[i] = p->prox;
+            
+        }
+    }
+}

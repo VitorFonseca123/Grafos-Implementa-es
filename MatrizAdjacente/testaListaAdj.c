@@ -1,5 +1,5 @@
-#include "GrafoMatriz.h"
-// #include "Grafo_listaAdj.h"
+//#include "GrafoMatriz.h"
+#include "Grafo_listaAdj.h"
 #include <stdio.h>
 
 int main()
@@ -8,16 +8,12 @@ int main()
     int numVertices;
     int v1, v2;
     Peso peso;
-    // inicializaGrafo(&g1, 10);
-
     do
     {
         printf("Digite o numero de vertices do Grafo\n");
         scanf("%d", &numVertices);
     } while (!(inicializaGrafo(&g1, numVertices)));
-
-    imprimeGrafo(&g1);
-    for (int i = 0; i <= numVertices; i++)
+     for (int i = 0; i <= numVertices; i++)
     {
         printf("Digite a linha\n");
         scanf("%d", &v1);
@@ -27,7 +23,5 @@ int main()
         scanf("%d", &peso);
         insereAresta(v1, v2, peso, &g1);
     }
-    imprimeGrafo(&g1);
-
     return 0;
 }

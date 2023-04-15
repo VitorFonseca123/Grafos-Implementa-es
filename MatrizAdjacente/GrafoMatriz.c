@@ -42,7 +42,7 @@ bool verificavalidadeVertice(int v, Grafo *grafo)
                 v, grafo->numVertices);
         return false;
     }
-    if (v < 0) //pode ser <= depende das regras do grafo. se ele começa em 0 ou 1
+    if (v < 0) // pode ser <= depende das regras do grafo. se ele começa em 0 ou 1
     {
         fprintf(stderr, "Erro: Numero de vertice (%d) deve ser positivo.\n", v);
         return false;
@@ -59,7 +59,8 @@ bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo)
 }
 bool existeAresta(int v1, int v2, Grafo *grafo)
 {
-    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo))) return false;
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
+        return false;
     if (grafo->mat[v1][v2] == AN)
         return false;
     return true;
@@ -114,3 +115,14 @@ int proxListaAdj(int v, Grafo *grafo, int atual)
 /*int primeiroListaAdj(int v, Grafo *grafo){
     proxListaAdj(v, grafo, 0);
 }*/
+void imprimeGrafo(Grafo *grafo)
+{
+    for (int i = 0; i <=grafo->numVertices; i++)
+    {
+        for (int j = 0; j <= grafo->numVertices; j++)
+        {
+            printf("%d ", grafo->mat[i][j]);
+        }
+        printf("\n");
+    }
+}

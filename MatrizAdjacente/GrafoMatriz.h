@@ -19,3 +19,4 @@ Peso obtemPesoAresta(int v1, int v2, Grafo *grafo);
 bool removeAresta(int v1, int v2, Peso *peso, Grafo *grafo);
 bool listaAdjVazia(int v, Grafo *grafo);
 Apontador proxListaAdj(int v, Grafo *grafo, Apontador atual);
+void imprimeGrafo(Grafo *Grafo);
