@@ -1,5 +1,8 @@
 #include <stdio.h>
 #include "GrafoMatriz.h"
+#define branco 0
+#define cinza 1
+#define preto 2
 
 /*inicializar grafo
 Chamada da função exemplo:
@@ -99,7 +102,7 @@ bool listaAdjVazia(int v, Grafo *grafo)
     }
     return true;
 }
-int proxListaAdj(int v, Grafo *grafo, int atual)
+Apontador proxListaAdj(int v, Grafo *grafo, int atual)
 {
     if (!verificavalidadeVertice(v, grafo))
         return VERTICE_INVALIDO;
@@ -117,12 +120,42 @@ int proxListaAdj(int v, Grafo *grafo, int atual)
 }*/
 void imprimeGrafo(Grafo *grafo)
 {
-    for (int i = 0; i <=grafo->numVertices; i++)
+    for (int i = 0; i <= grafo->numVertices; i++)
     {
         for (int j = 0; j <= grafo->numVertices; j++)
         {
             printf("%d ", grafo->mat[i][j]);
         }
         printf("\n");
+    }
+}
+void visitaBP(Apontador v, Grafo *grafo, Apontador *tempo, Apontador *cor, Apontador *tdesc, Apontador *tterm, Apontador *antecessor){
+    cor[v]=cinza; tdesc[v]=++(*tempo); //é realmente ponteiro?estranho
+    int u=0;
+    while(proxListaAdj(v,grafo, u)){
+        u++;
+        antecessor[u]=v;
+        visitaBP(u, grafo, tempo, cor, tdesc, tterm, antecessor);
+    }
+    tterm[v]=++(*tempo);//??
+    cor[v]=preto;
+}
+void buscaProfundidade(Grafo *grafo)
+{
+    int cor[grafo->numVertices];   // branco 0, cinza 1, preto 2
+    int tdesc[grafo->numVertices]; // tempo de descobrimento
+    int tterm[grafo->numVertices]; // tempo de termino
+    int antecessor[grafo->numVertices];
+
+    int tempo = 0;
+
+    for (int v = 0; v <= grafo->numVertices; v++)
+    {
+        cor[v] = branco;
+        tdesc[v] = tterm[v] = 0; // isso é válido?
+        antecessor[v] = VERTICE_INVALIDO;
+    }
+    for(int v = 0; v <= grafo->numVertices; v++){
+        if(cor[v]==branco) visitaBP(v, grafo, tempo, cor, tdesc, tterm, antecessor);//
     }
 }

@@ -88,7 +88,7 @@ bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo)
 {
     Apontador p;
     if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
-        return;
+        return false;
     if (!(p = (Apontador)calloc(1, sizeof(Aresta))))
     {
         fprintf(stderr, "ERRO: Falha na alocacao de memoria na funcao insereAresta\n");
@@ -139,7 +139,7 @@ void liberaGrafo(Grafo *grafo)
     // libera a lista de adjacencia de cada vertice
     for (v = 0; v <= grafo->numVertices; v++)
     {
-        while ((p = grafo->listaAdj[v] != NULL))
+        while ((p = grafo->listaAdj[v]) != NULL)
         {
             grafo->listaAdj[v] = p->prox;
             p->prox = NULL;
@@ -151,14 +151,17 @@ void liberaGrafo(Grafo *grafo)
     free(grafo->listaAdj);
     grafo->listaAdj = NULL;
 }
-void imprimeGrafo(Grafo *grafo){
+void imprimeGrafo(Grafo *grafo)
+{
     Apontador p;
-    for(int i=0;i<=grafo->numVertices;i++){
-         while ((p = grafo->listaAdj[i] != NULL))
+    for (int i = 1; i <= grafo->numVertices; i++)
+    {
+        printf("%d ", i);
+        while ((p = grafo->listaAdj[i]) != NULL)
         {
-            printf("%d ", grafo->listaAdj[i]->Peso);
+            printf("%d ", grafo->listaAdj[i]->vdest);
             grafo->listaAdj[i] = p->prox;
-            
         }
+        printf("\n");
     }
 }
