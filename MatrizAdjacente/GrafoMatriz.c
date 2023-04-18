@@ -129,16 +129,23 @@ void imprimeGrafo(Grafo *grafo)
         printf("\n");
     }
 }
-void visitaBP(Apontador v, Grafo *grafo, Apontador *tempo, Apontador *cor, Apontador *tdesc, Apontador *tterm, Apontador *antecessor){
-    cor[v]=cinza; tdesc[v]=++(*tempo); //é realmente ponteiro?estranho
-    int u=0;
-    while(proxListaAdj(v,grafo, u)){
-        u++;
-        antecessor[u]=v;
-        visitaBP(u, grafo, tempo, cor, tdesc, tterm, antecessor);
-    }
-    tterm[v]=++(*tempo);//??
-    cor[v]=preto;
+void visitaBP(Apontador v, Grafo *grafo, Apontador *tempo, Apontador *cor, Apontador *tdesc, Apontador *tterm, Apontador *antecessor)
+{
+    cor[v] = cinza;
+    tdesc[v] = ++(tempo); // é realmente ponteiro?estranho
+    int u = 0;
+    do
+    {
+        int u = proxListaAdj(v, grafo, u);
+        if (cor[u] == branco)
+        {
+            antecessor[u] = v;
+            visitaBP(u, grafo, tempo, cor, tdesc, tterm, antecessor);
+        }
+    } while (proxListaAdj(v, grafo, u) != VERTICE_INVALIDO);
+
+    tterm[v] = ++(tempo); //??
+    cor[v] = preto;
 }
 void buscaProfundidade(Grafo *grafo)
 {
@@ -155,7 +162,9 @@ void buscaProfundidade(Grafo *grafo)
         tdesc[v] = tterm[v] = 0; // isso é válido?
         antecessor[v] = VERTICE_INVALIDO;
     }
-    for(int v = 0; v <= grafo->numVertices; v++){
-        if(cor[v]==branco) visitaBP(v, grafo, tempo, cor, tdesc, tterm, antecessor);//
+    for (int v = 0; v <= grafo->numVertices; v++)
+    {
+        if (cor[v] == branco)
+            visitaBP(v, grafo, tempo, cor, tdesc, tterm, antecessor); //
     }
 }
