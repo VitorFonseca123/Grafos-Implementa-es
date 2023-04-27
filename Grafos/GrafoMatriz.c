@@ -60,6 +60,15 @@ bool insereAresta(int v1, int v2, Peso peso, Grafo *grafo)
     grafo->numArestas++;
     return true;
 }
+bool insereArestaNDirecional(int v1, int v2, Peso peso, Grafo *grafo)
+{
+    if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
+        return false;
+    grafo->mat[v1][v2] = peso;
+    grafo->mat[v2][v1] = peso;
+    grafo->numArestas++;
+    return true;
+}
 bool existeAresta(int v1, int v2, Grafo *grafo)
 {
     if (!(verificavalidadeVertice(v1, grafo) && verificavalidadeVertice(v2, grafo)))
@@ -144,8 +153,8 @@ void visitaBP(int v, Grafo *grafo, int *tempo, int *cor, int *tdesc, int *tterm,
 {
     cor[v] = cinza;
     tdesc[v] = ++(*tempo); // é realmente ponteiro?estranho
-    int cont=0;
-    int u=primeiroListaAdj(v, grafo); //lembrar de implementar hoje!!!
+    
+    Apontador u=primeiroListaAdj(v, grafo); //lembrar de implementar hoje!!!
    // printf("adj a %d: ",v);
     do{
         //printf("%d,",u);
@@ -175,8 +184,7 @@ void buscaProfundidade(Grafo *grafo)
     {
         cor[v] = branco;
         tdesc[v] = tterm[v] = 0; // isso é válido?
-        antecessor[v] = VERTICE_INVALIDO;
-        
+        antecessor[v] = VERTICE_INVALIDO;      
     }
 
     
