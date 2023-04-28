@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #define MAXNUMVERTICES 100
 #define AN -1 // AN= aresta nula
-#define VERTICE_INVALIDO NULL
+#define VERTICE_INVALIDO -1
 
 typedef int Peso;
 typedef struct

@@ -189,7 +189,7 @@ void imprimeGrafo(Grafo *grafo)
         while ((p = grafo->listaAdj[i]) != NULL)
         {
             printf("%d ", grafo->listaAdj[i]->vdest);
-            grafo->listaAdj[i] = p->prox;
+            p=p->prox;
         }
         printf("\n");
     }
@@ -205,22 +205,20 @@ void visitaBP(int v, Grafo *grafo, int *tempo, int *cor, int *tdesc, int *tterm,
     cor[v] = cinza;
     tdesc[v] = ++(*tempo); // é realmente ponteiro?estranho
     
-    Apontador u=primeiroListaAdj(v, grafo); //lembrar de implementar hoje!!!
-    printf("\n%d\n",u->vdest);
-    int Uapont = retornaApontador(u);
-    
-    //printf("adj a %d: ",v);
-    do{
-        //printf("%d,",u);
-         if (cor[Uapont] == branco)
+    Apontador u = primeiroListaAdj(v, grafo); 
+    if(u != VERTICE_INVALIDO){
+        printf("%d",u->vdest);
+    }
+
+    while(u!=VERTICE_INVALIDO){
+        int Uapont = retornaApontador(u);
+        if (cor[Uapont] == branco)
         {
             antecessor[Uapont] = v;
             visitaBP(Uapont, grafo, tempo, cor, tdesc, tterm, antecessor);
         }
-        u=proxListaAdj(v,grafo,u); 
-        
-        //cont++;
-    }while(Uapont!=AN);
+        u=proxListaAdj(v,grafo,u);
+    }
     tterm[v] = ++(*tempo); //??
     cor[v] = preto;
     //printf("\n");
@@ -248,7 +246,7 @@ void buscaProfundidade(Grafo *grafo)
     
     for (int i = 0; i < grafo->numVertices; i++)
     {
-       // printf("%d: %d/%d\n", i, tdesc[i], tterm[i]);
+       printf("%d: %d/%d\n", i, tdesc[i], tterm[i]);
     }
 }
 

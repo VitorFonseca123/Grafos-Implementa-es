@@ -17,7 +17,7 @@ int main()
     printf("Digite o numero de arestas do Grafo\n");
     scanf("%d", &numVertices);
     int tipoMatriz=0;//0 direcional, 1 não direcional
-    for (int i = 0; i < numVertices; i++)
+    /*for (int i = 0; i < numVertices; i++)
     {
         printf("Digite a linha\n");
         scanf("%d", &v1);
@@ -30,7 +30,21 @@ int main()
         else insereArestaNDirecional(v1, v2, 1, &g1);
         
 
-    }
+    }*/
+    if(tipoMatriz==0){
+            insereAresta(1, 2, 1, &g1);
+            insereAresta(2, 3, 1, &g1);
+            insereAresta(3, 1, 1, &g1);
+            insereAresta(3, 3, 1, &g1);
+            insereAresta(4, 3, 1, &g1);
+        }
+        else{
+            insereAresta(1, 2, 1, &g1);
+            insereAresta(2, 3, 1, &g1);
+            insereAresta(3, 1, 1, &g1);
+            insereAresta(3, 3, 1, &g1);
+            insereAresta(4, 3, 1, &g1);
+        } 
     imprimeGrafo(&g1);
     printf("\n");
     buscaProfundidade(&g1);
